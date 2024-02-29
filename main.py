@@ -2,11 +2,14 @@ import files
 
 #El manejo de errores en realidad se debe hacer desde el manejo de la función
 
+print(files.read('sample1.txt'))
 
-try:
-    files.update('sample.txt','')
-except ValueError as error:
-    print('No se pudo modificar el archivo: ', error)
+
+
+# try:
+#     files.update('sample.txt','')
+# except ValueError as error:
+#     print('No se pudo modificar el archivo: ', error)
 
 # try:
 #     files.create_file("sample.txt")
