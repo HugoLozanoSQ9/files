@@ -12,7 +12,11 @@ def create_file(file_name, content=None):
         file.write(content)
 
 
-def modify_file(file_name, content, overwrite=False):
+def update(file_name, content, overwrite=False):
+
+    if not isinstance(content,str) or content == '':
+        raise ValueError('content argument must be specified')
+    
     mode = "w" if overwrite else "a"
 
     file = open(file_name, mode)

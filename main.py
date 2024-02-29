@@ -2,10 +2,18 @@ import files
 
 #El manejo de errores en realidad se debe hacer desde el manejo de la función
 
+
 try:
-    files.create_file("sample.txt")
-except OSError as error:
-    print('No se pudo crear el archivo: ',error)
+    files.update('sample.txt','')
+except ValueError as error:
+    print('No se pudo modificar el archivo: ', error)
+
+# try:
+#     files.create_file("sample.txt")
+# except OSError as error:
+#     print('No se pudo crear el archivo: ',error)
+
+
 
 print("Programa terminado con éxito")
 # except FileExistsError as error: # con esto podemos delimitar el tipo de arror
