@@ -17,39 +17,45 @@ def create(file_name:str, content: list | dict =None)-> None:
     except PermissionError as error: 
         raise OSError(f'You do not have permisson to create "{file_name}"')from error
     
-    if content:
-        cre_list= [content]
-        json_cre_list = json.dumps(cre_list)
-        file.write(json_cre_list)
-        
+    if content and isinstance(content,(list,dict)):
+        content = json.dumps(content)
+    file.write(content)
+         
 
-def update(file_name :str, content : list | dict , overwrite:bool=False):
+def update(file_name :str, content : list | dict)-> None:
 
-    """Create or overwrite a JSON File
+    """Create or update a JSON File
     args:
         file_name: str
         content: list | dict 
-        overwrite: you will update the file with another JSON info. 
+        overwrite: Bool -> False you will update the file with another JSON info. 
     
     Raises:
         ValueError: only will see this error when not is a list | dict or this is void
     """
 
-    if not isinstance(content,list | dict) or content == '':
+    if not isinstance(content, (dict, list)) or content == '':
+        raise ValueError('content argument must be specified or not is the rigth value')
     
-        raise ValueError('content argument must be specified')
-    
-    mode = "w" if overwrite else "a"
+    file = open(file_name,'r')
+    file_content = json.loads(file.read())
+    file.close()
 
-    file = open(file_name, mode)
-    if mode == 'w':
-        cre_list= [overwrite]
-        json_cre_list = json.dumps(cre_list)
-        file.write(json_cre_list)
-    else:
-        cre_list= [content]
-        json_cre_list = json.dumps(cre_list)
-        file.write(json_cre_list)
+    if isinstance(file_content, list):
+        if isinstance(content, dict):
+            file_content.append(content)
+
+        elif isinstance(content,list):
+            file_content += content
+
+    elif isinstance(file_content, dict):
+        if isinstance(content,dict):
+            file_content = [file_content,content]
+
+        elif isinstance(content, list):
+            file_content = [file_content] + content 
+    file = open(file_name,'w')
+    file.write(json.dumps(file_content))
     file.close()
 
 
@@ -61,11 +67,14 @@ def read(file_name:list | dict) -> list | dict:
         file_name(list | dict) : File name or path 
         Returns(list | dict ): File content
     
+    Raises:
+        FileNotFoundError: This error will appear when the file not exist
+    
     """
     if not os.path.exists(file_name):
         raise FileNotFoundError(f'File {file_name} was not found')
 
-    file = open(file_name, "r")  # modo r
+    file = open(file_name, "r")  # modo r, se puede quitar la r pq es el argumento por defecto
     file_name = file.read()
     python_user_list = json.loads(file_name)
     file.close()

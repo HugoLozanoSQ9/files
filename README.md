@@ -37,3 +37,13 @@ Formato a manejar:
 se pueden crear diccionarios en python --> crear una lista con los diccionarios --> usar json.dumps(lista) --> usar nuestra librería create('nombre del texto' , la lista de los diccionarios ya pasada por json.dumps) y procede a crearnos un .txt que tiene los elementos de nuestra lista ya en string (recuerda que python no puede de forma nativa escribir una lista, diccionarios o X dentro de un archivo .txt)
 al usar  los métodos JSON ayuda a convertir los datos a sus string textuales  
 
+. algo (recibe) --> arroja
+Files 
+
+.load (file) -> Dict list
+.ump (dict list) --> File
+
+Str (ya debe estar formateado en formato Json) 
+
+.loads (str) -> Dict list
+.dups (dict/list) -> Str
